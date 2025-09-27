@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main_styles.css" />
+    <title>Agueybana</title>
+  </head>
+
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="nav-left">
+          <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+        </div>
+
+        <div class="nav-center nav-buttons">
+          <button onclick="location.href='main.html'">Inicio</button>
+          <button onclick="location.href='subscripcion.html'">Subscripción</button>
+          <button onclick="location.href='nosotros.html'">Sobre nosotros</button>
+        </div>
+
+        <div class="nav-right contact-info">
+          <!-- <a href="tel:+19396453838"> -->
+          <a href="https://wa.me/+19394100321" target="_blank">
+            <div class="contact phone">
+              <img src="Images/Phone_Logo.webp" alt="Phone" />
+              <span>(939) 645-3838</span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+            <div class="contact instagram">
+              <img src="Images/Insta_Logo.webp" alt="Instagram" />
+              <span>@garajeagueybana</span>
+            </div>
+          </a>
+        </div>
+      </nav>
+      
+      <section class="heading">
+        <div class="heading-content">
+          <h1>Subscripción de mantenimiento</h1>
+          <p>Incluye 4 visitas al año para un mantenimiento automático de tu carro.</p>
+        </div>
+      </section>
+
+      <a href="subscripcion.html" class="advertisement-anchor">
+        <div class="advertisement">
+          <p>Tu mecánico, cuando y donde lo necesitas.</p>
+          <button>¡Suscríbete ahora!</button>
+        </div>
+      </a>
+    </header>
+
+
+    <main>
+      <section class="summary-services">
+        <div class="interact-summary">
+          <div class="img-box">
+            <img id="mainImgLeft" src="Images/1.jpg" alt="">
+          </div>
+          <div class="nav">
+            <span onclick="prev()">&#9664;</span>
+            Servicios:
+            <span onclick="next()">&#9654;</span>
+          </div>
+        </div>
+
+        <div class="summary-text">
+          <div class="image-placeholder">
+            <img id="mainImgRight" src="Images/1.jpg" alt="">
+          </div>
+
+          <hr> <!-- Black line between image and text -->
+
+          <h2 id="title">Title goes here</h2>
+          <p id="text">
+            Text goes here
+          </p>
+
+          <hr> <!-- Black line between paragraph and small title -->
+
+          <div class="small-title" id="smallTitle">Title goes here</div>
+        </div>
+
+      </section>
+
+      <script>
+        const slides = [
+          {t:"Mecanica liviana", 
+          c:"Mantenimiento y reparaciones esenciales para prolongar la vida útil de tu vehículo. Realizamos cambio de aceite, filtros, bujías, pastillas de freno, correas y mangueras, así como pequeños ajustes mecánicos. Este servicio ayuda a prevenir fallas mayores y mantiene el rendimiento del motor. Trabajamos en tu domicilio para tu comodidad, sin sacrificar calidad. Con revisiones periódicas, tu auto se mantiene en óptimas condiciones.", 
+          i:"Images/Liviana_Sum.webp"},
+
+          {t:"Electromecanica", 
+          c:"Servicio especializado en diagnóstico y reparación de los sistemas eléctricos y electrónicos de tu vehículo. Incluye batería, alternador, motor de arranque, sistema de luces, cableado y módulos de control. Utilizamos herramientas de diagnóstico avanzadas para detectar fallas con precisión. Nuestro objetivo es garantizar un funcionamiento óptimo y seguro de todos los componentes eléctricos. Ideal para evitar problemas que puedan dejarte varado.",
+          i:"Images/Electro_Sum.webp"},
+
+          {t:"Inspecion de vehiculo", 
+          c:"Revisión detallada del estado general de tu auto, cubriendo tanto el sistema mecánico como el eléctrico. Verificamos frenos, suspensión, dirección, motor, transmisión, luces y niveles de fluidos. Nuestro objetivo es detectar posibles fallas antes de que se conviertan en reparaciones costosas. Esta inspección es ideal antes de un viaje o al comprar un vehículo usado. Entregamos un reporte claro con los hallazgos y recomendaciones.", 
+          i:"Images/Inspection_Sum.webp"},
+
+          {t:"Alienamiento", 
+          c:"Ajuste preciso de los ángulos de las ruedas para que trabajen de manera correcta y uniforme. Esto mejora la estabilidad del vehículo, reduce el desgaste de los neumáticos y optimiza la respuesta de la dirección. Un alineamiento adecuado también ayuda a ahorrar combustible y brinda una conducción más segura. Usamos equipos calibrados para obtener mediciones exactas. Recomendado cada cierto kilometraje o después de impactos en baches o bordillos.", 
+          i:"Images/Alignment_Sum.webp"}
+        ];
+
+        let idx = 0;
+
+        function show() {
+          const textContent = document.querySelector(".summary-text");
+
+          textContent.classList.remove("animate-text");
+          void textContent.offsetWidth; 
+
+          title.textContent = slides[idx].t;
+          text.textContent = slides[idx].c;
+          smallTitle.textContent = slides[idx].t;
+          mainImgLeft.src = slides[idx].i;
+          mainImgRight.src = slides[idx].i;
+
+          textContent.classList.add("animate-text");
+        }
+
+        function prev() {
+          idx = (idx - 1 + slides.length) % slides.length;
+          show();
+        }
+
+        function next() {
+          idx = (idx + 1) % slides.length;
+          show();
+        }
+
+        show();
+      </script>
+
+
+      <section class="subscription">
+        <div class="car" onclick="location.href='subscripcion.html'">
+          <img src="Images/Car_Icon_2.webp" alt="Car icon">
+          <h1>Sedán Básico</h1>
+          <small>Para sedanes, hatchbacks, coupés</small>
+          <h2><span class="price">$400</span><span class="renewal">/año</span></h2>
+          <!-- <h2><span class="price">$89.99</span><span class="renewal">/mensual</span></h2> -->
+          <ul>
+            <li>✅ 2 cambios de aceite y filtro al año</li>
+            <li>✅ 2 Rotación de gomas (con cada cambio de aceite)</li>
+            <li>✅ 1 flush del sistema de frenos (Para ser realizado en cualquiera de las 4 visitas)</li>
+            <li>✅ 2 inspecciones multipunto</li>
+            <li>✅ Chequeo de fluidos esenciales en cada visita</li>
+            <li>✅ Servicio a domicilio en toda la isla (prioridad área sur)</li>
+            <li class="invalid">❌ No disponible para SUV, pick-up trucks ni vehículos ⚡ 100% eléctricos</li>
+          </ul>
+        </div>
+
+        <div class="truck" onclick="location.href='subscripcion.html'">
+          <img src="Images/SUV_Icon.webp" alt="SUV icon">
+          <h1>Guagua Básica</h1>
+          <small>Para SUV, pick-up trucks, minivans</small>
+          <h2><span class="price">$500</span><span class="renewal">/año</span></h2>
+          <!-- <h2><span class="price">$99.99</span><span class="renewal">/mensual</span></h2> -->
+          <ul>
+            <li>✅ 2 cambios de aceite y filtro al año</li>
+            <li>✅ 2 Rotación de gomas (con cada cambio de aceite)</li>
+            <li>✅ 1 flush del sistema de frenos (Para ser realizado en cualquiera de las 4 visitas)</li>
+            <li>✅ 2 inspecciones multipunto</li>
+            <li>✅ Chequeo de fluidos esenciales en cada visita</li>
+            <li>✅ Servicio a domicilio en toda la isla (prioridad área sur)</li>
+            <li class="invalid">❌ No disponible para sedanes, ni vehículos ⚡ 100% eléctricos</li>
+          </ul>
+        </div>
+
+        <div class="premium" onclick="location.href='subscripcion.html'">
+          <img src="Images/Premium_Icon_2.webp" alt="Premium icon">
+          <h1>Premium</h1>
+          <small>Para múltiples vehículos (carro + guagua)</small>
+          <h2><span class="price">$550</span><span class="renewal">/año</span></h2>
+          <!-- <h2><span class="price">$129.99</span><span class="renewal">/mensual</span></h2> -->
+          <ul>
+            <li>✅ Todos los beneficios del Car y Guagua Tier</li>
+            <li>✅ Descuento de 25% en la labor en otras reparaciones realizadas.</li>
+            <li>✅ Opción de registrar más de un vehículo</li>
+            <li>✅ Flexibilidad para mantener vehículos distintos bajo una misma cuenta</li>
+            <li>✅ Servicio a domicilio en toda la isla (prioridad área sur)</li>
+            <li class="invalid">❌ No cubre vehículos ⚡ 100% eléctricos</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+
+<footer>
+  <!-- Left Section: Logo -->
+  <section class="FooterSiteName">
+    <div class="footer-box">
+      <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+    </div>
+  </section>
+
+  <!-- Middle Section: Contact -->
+  <section class="FooterSiteSocial">
+    <div class="footer-box">
+      <h2>Contact us</h2>
+      <div class="FollowSocials">
+
+        <a href="https://wa.me/+19394100321" target="_blank">
+          <div class="contact phone">
+            <img src="Images/Phone_Logo.webp" alt="Phone" />
+            <span>(939) 645-3838</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+          <div class="contact instagram">
+            <img src="Images/Insta_Logo.webp" alt="Instagram" />
+            <span>@garajeagueybana</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Right Section: Subscribe -->
+  <section class="FooterSiteNews">
+    <div class="footer-box">
+      <h2>Subscribe to our membership</h2>
+      <a href="subscripcion.html" class="SignUp">Subscribe!</a>
+    </div>
+  </section>
+</footer>
+
+
+</html>
