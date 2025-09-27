@@ -1,2 +1,0 @@
-For screens to shrink and enlarge exactly the same based on screen size, you need to use "em" measurement with width, height, padding, margin and borders, 
-while ALWAYS including font-size with "em" every single time you use text on the website.
