@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sub_styles.css" />
+    <title>Agueybana</title>
+  </head>
+
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="nav-left">
+          <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+        </div>
+
+        <div class="nav-center nav-buttons">
+          <button onclick="location.href='index.html'">Inicio</button>
+          <button onclick="location.href='subscripcion.html'">Subscripción</button>
+          <button onclick="location.href='nosotros.html'">Sobre nosotros</button>
+        </div>
+
+        <div class="nav-right contact-info">
+          <!-- <a href="tel:+19396453838"> -->
+          <a href="https://wa.me/+19394100321" target="_blank">
+            <div class="contact phone">
+              <img src="Images/Phone_Logo.webp" alt="Phone" />
+              <span>(939) 645-3838</span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+            <div class="contact instagram">
+              <img src="Images/Insta_Logo.webp" alt="Instagram" />
+              <span>@garajeagueybana</span>
+            </div>
+          </a>
+        </div>
+      </nav>
+      
+      <section class="heading">
+        <div class="heading-content">
+          <h1>Subscripción de mantenimiento</h1>
+          <p>Incluye 4 visitas al año para un mantenimiento automático de tu carro.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+
+      <h1 class="services-title">Servicios que ofrecemos</h1>
+      <section class="services">
+        
+        <div class="service-box">
+          <img src="Images/Oil.webp" alt="Cambio de aceite">
+          <h3>Cambio de aceite</h3>
+          <p>2 servicios de cambio de aceite y filtro al año, incluyendo rotación de gomas.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/brake.webp" alt="Flush de frenos">
+          <h3>Flush de frenos</h3>
+          <p>Servicio completo de limpieza del sistema de frenos una vez al año.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/inspection.webp" alt="Inspección multipunto">
+          <h3>Inspección multipunto</h3>
+          <p>2 chequeos completos al año para detectar cualquier problema a tiempo.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/fluid-level.webp" alt="Chequeo de fluidos">
+          <h3>Chequeo de fluidos</h3>
+          <p>En cada visita se revisan y rellenan todos los fluidos visibles del vehículo.</p>
+        </div>
+      </section>
+
+
+
+      <h1 class="services-title">Servicios adicionales (<b>no incluidos</b>; precios y citas <b>según servicio</b>)</h1>
+      <section class="services">
+        <div class="service-box">
+          <img src="Images/General_Mechanic.webp" alt="Cambio de aceite">
+          <h3>Mecanica liviana general</h3>
+          <p>Reparaciones básicas como frenos, correas, batería, luces, sensores y otros componentes menores.</p>
+        </div>
+        
+        <div class="service-box">
+          <img src="Images/Electromechanics.webp" alt="Cambio de aceite">
+          <h3>Electromecanica</h3>
+          <p>Diagnóstico y reparación de fallas eléctricas y electrónicas del sistema del vehículo.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/Inspection_Sale.webp" alt="Cambio de aceite">
+          <h3>Inspección de vehículos para compra/venta</h3>
+          <p>Evaluación completa del vehículo para conocer su estado antes de comprarlo o venderlo.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/Alignment.webp" alt="Cambio de aceite">
+          <h3>Alineamientos</h3>
+          <p>Ajuste de ángulos de las ruedas para corregir desviaciones y mejorar el manejo del vehículo.</p>
+        </div>
+
+      </section>
+
+<h1 class="services-title">Agregar tu Vehículo</h1>
+<section class="vehicle-form">
+  <form id="vehicleForm">
+
+    <div class="form-group">
+      <label for="year">Año</label>
+      <select id="year" required>
+        <option value="">Selecciona año</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="make">Marca</label>
+      <select id="make" required disabled>
+        <option value="">Selecciona marca</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="model">Modelo</label>
+      <select id="model" required disabled>
+        <option value="">Selecciona modelo</option>
+      </select>
+    </div>
+
+    <!-- Plan asignado -->
+    <div class="form-group">
+      <label for="plan">Plan asignado:</label>
+      <div id="plan" class="plan-display">—</div>
+      <input type="hidden" id="plan_hidden" name="plan">
+    </div>
+
+    <button type="submit" class="select-btn">Agregar Vehículo</button>
+  </form>
+
+  <div id="result" class="result-card hidden"></div>
+</section>
+
+<script>
+  const yearSelect = document.getElementById("year");
+  const makeSelect = document.getElementById("make");
+  const modelSelect = document.getElementById("model");
+  const planDiv = document.getElementById("plan");
+  const planHidden = document.getElementById("plan_hidden");
+  const form = document.getElementById("vehicleForm");
+  const resultDiv = document.getElementById("result");
+
+  const allowedMakes = [
+    "Toyota","Hyundai","Kia","Honda","Nissan","Mitsubishi","Mazda",
+    "Ford","Chevrolet","Jeep","Subaru","Volkswagen","Chrysler",
+    "Dodge","Ram","GMC","Buick","Acura","Infiniti","Lexus",
+    "Mercedes-Benz","BMW","Audi","Lincoln","Cadillac",
+    "MINI","Porsche","Volvo","Land Rover","Jaguar","Alfa Romeo","FIAT"
+  ];
+
+  // Comprehensive vehicle classification database
+  const vehicleTypes = {
+    sedan: [
+      // Toyota
+      'camry', 'corolla', 'avalon', 'yaris', 'vios', 'belta',
+      // Honda  
+      'accord', 'civic', 'insight', 'city', 'grace',
+      // Nissan
+      'altima', 'sentra', 'maxima', 'versa', 'sunny', 'almera',
+      // Hyundai
+      'elantra', 'sonata', 'genesis', 'accent', 'verna', 'azera',
+      // Kia
+      'forte', 'optima', 'cadenza', 'rio', 'cerato', 'stinger',
+      // Mazda
+      'mazda3', 'mazda6', 'mazda2',
+      // Ford
+      'fusion', 'focus', 'taurus', 'fiesta',
+      // Chevrolet
+      'cruze', 'malibu', 'impala', 'sonic', 'aveo', 'cobalt',
+      // Volkswagen
+      'jetta', 'passat', 'golf', 'polo', 'arteon', 'cc',
+      // Subaru
+      'legacy', 'impreza', 'wrx',
+      // Mitsubishi
+      'lancer', 'galant', 'mirage',
+      // Dodge
+      'charger', 'avenger', 'dart',
+      // Chrysler
+      '200', '300',
+      // Buick
+      'lacrosse', 'regal', 'verano',
+      // Cadillac
+      'cts', 'xts', 'ats', 'ct4', 'ct5',
+      // Lincoln
+      'mkz', 'continental',
+      // Acura
+      'tlx', 'ilx', 'tsx', 'tl', 'integra',
+      // Infiniti
+      'q50', 'q70', 'g35', 'g37', 'm35', 'm37',
+      // Lexus
+      'is', 'es', 'gs', 'ls',
+      // Mercedes-Benz
+      'c-class', 'e-class', 's-class', 'cla', 'a-class',
+      // BMW
+      '3 series', '5 series', '7 series', '2 series', '1 series',
+      // Audi
+      'a3', 'a4', 'a6', 'a8', 's3', 's4', 's5', 's6', 's7', 's8',
+      // Porsche
+      'panamera',
+      // Volvo
+      's60', 's90', 's80',
+      // Jaguar
+      'xe', 'xf', 'xj',
+      // Alfa Romeo
+      'giulia',
+      // FIAT
+      '500', 'tipo',
+      // MINI (sedan variants)
+      'countryman',
+      // Sports cars/Coupes (classified as sedan for simplicity)
+      'mustang', 'camaro', 'challenger', 'corvette', 'miata', 'mx-5', 
+      'brz', 'fr-s', 'gt86', '370z', '350z', 'tt', 'z4', 'slk', 'amg gt'
+    ],
+    
+    guagua: [
+      // SUVs - Toyota
+      'rav4', '4runner', 'highlander', 'sequoia', 'land cruiser', 'prado', 
+      'fortuner', 'rush', 'venza', 'harrier', 'c-hr',
+      // SUVs - Honda
+      'cr-v', 'pilot', 'passport', 'ridgeline', 'hr-v', 'vezel',
+      // SUVs - Nissan
+      'rogue', 'pathfinder', 'armada', 'murano', 'juke', 'kicks', 'x-trail', 'patrol',
+      // SUVs - Hyundai
+      'tucson', 'santa fe', 'palisade', 'kona', 'venue', 'creta', 'ix35',
+      // SUVs - Kia
+      'sportage', 'sorento', 'telluride', 'seltos', 'niro', 'mohave',
+      // SUVs - Mazda
+      'cx-3', 'cx-5', 'cx-9', 'cx-30', 'cx-7',
+      // SUVs - Ford
+      'escape', 'explorer', 'expedition', 'bronco', 'bronco sport', 'edge', 
+      'ecosport', 'everest', 'kuga',
+      // SUVs - Chevrolet
+      'equinox', 'traverse', 'tahoe', 'suburban', 'blazer', 'trailblazer', 'captiva',
+      // SUVs - GMC
+      'terrain', 'acadia', 'yukon', 'sierra',
+      // SUVs - Jeep
+      'wrangler', 'grand cherokee', 'cherokee', 'compass', 'renegade', 'gladiator',
+      // SUVs - Subaru
+      'forester', 'outback', 'ascent', 'crosstrek', 'xv',
+      // SUVs - Volkswagen
+      'tiguan', 'touareg', 'atlas', 'taos', 't-cross',
+      // SUVs - Mitsubishi
+      'outlander', 'eclipse cross', 'montero', 'asx', 'pajero',
+      // SUVs - Dodge
+      'durango', 'journey',
+      // SUVs - Chrysler
+      'pacifica',
+      // SUVs - Buick
+      'encore', 'envision', 'enclave',
+      // SUVs - Cadillac
+      'xt4', 'xt5', 'xt6', 'escalade', 'srx',
+      // SUVs - Lincoln
+      'corsair', 'nautilus', 'aviator', 'navigator', 'mkc', 'mkx',
+      // SUVs - Acura
+      'rdx', 'mdx',
+      // SUVs - Infiniti
+      'qx50', 'qx60', 'qx80', 'fx35', 'fx37',
+      // SUVs - Lexus
+      'rx', 'gx', 'lx', 'nx', 'ux',
+      // SUVs - Mercedes-Benz
+      'gle', 'gls', 'glc', 'gla', 'glb', 'g-class', 'ml-class', 'gl-class',
+      // SUVs - BMW
+      'x1', 'x3', 'x5', 'x7', 'x2', 'x4', 'x6',
+      // SUVs - Audi
+      'q3', 'q5', 'q7', 'q8', 'sq5', 'sq7',
+      // SUVs - Porsche
+      'cayenne', 'macan',
+      // SUVs - Volvo
+      'xc40', 'xc60', 'xc90',
+      // SUVs - Land Rover
+      'range rover', 'discovery', 'defender', 'evoque', 'velar', 'freelander',
+      // SUVs - Jaguar
+      'f-pace', 'e-pace', 'i-pace',
+      // SUVs - Alfa Romeo
+      'stelvio',
+      // SUVs - MINI
+      'countryman', 'clubman',
+      // Pickup Trucks
+      'f-150', 'f-250', 'f-350', 'f-450', 'silverado', 'sierra', 'ram 1500', 
+      'ram 2500', 'ram 3500', 'tundra', 'tacoma', 'frontier', 'titan', 
+      'colorado', 'canyon', 'ranger', 'ridgeline', 'gladiator', 'maverick',
+      'hilux', 'navara', 'd-max', 'triton', 'amarok',
+      // Vans
+      'sienna', 'odyssey', 'pacifica', 'quest', 'sedona', 'carnival',
+      'transit', 'express', 'savana', 'promaster', 'nv200', 'metris',
+      // Crossovers
+      'crosstour', 'venza', 'fx35', 'fx37', 'zdx'
+    ],
+    
+    electric: [
+      // Tesla
+      'model s', 'model 3', 'model x', 'model y', 'roadster', 'cybertruck',
+      // Nissan
+      'leaf', 'ariya',
+      // Chevrolet
+      'bolt', 'volt',
+      // Toyota
+      'prius', 'prius prime', 'rav4 prime', 'highlander hybrid', 'camry hybrid',
+      'corolla hybrid', 'sienna hybrid', 'venza hybrid',
+      // Honda
+      'insight', 'accord hybrid', 'cr-v hybrid', 'clarity',
+      // Ford
+      'mustang mach-e', 'f-150 lightning', 'escape hybrid', 'explorer hybrid',
+      'fusion hybrid', 'c-max',
+      // Hyundai
+      'ioniq', 'kona electric', 'nexo', 'tucson hybrid', 'santa fe hybrid',
+      'sonata hybrid', 'elantra hybrid',
+      // Kia
+      'niro', 'soul ev', 'ev6', 'sorento hybrid', 'sportage hybrid', 
+      'optima hybrid',
+      // BMW
+      'i3', 'i4', 'ix', 'i8', 'x5 hybrid', '3 series hybrid', '5 series hybrid',
+      // Mercedes-Benz
+      'eqs', 'eqc', 'eqa', 'eqb', 'eqv', 'glc hybrid', 'gle hybrid', 'gls hybrid',
+      // Audi
+      'e-tron', 'q4 e-tron', 'a3 e-tron', 'q5 hybrid', 'a6 hybrid', 'a8 hybrid',
+      // Porsche
+      'taycan', 'panamera hybrid', 'cayenne hybrid', 'macan hybrid',
+      // Volvo
+      'xc40 recharge', 'xc60 hybrid', 'xc90 hybrid', 's60 hybrid', 's90 hybrid',
+      // Lexus
+      'ux hybrid', 'nx hybrid', 'rx hybrid', 'es hybrid', 'ls hybrid',
+      // Acura
+      'nsx', 'mdx hybrid', 'rdx hybrid',
+      // Infiniti
+      'qx60 hybrid',
+      // Jaguar
+      'i-pace', 'xe hybrid', 'xf hybrid',
+      // Land Rover
+      'range rover hybrid', 'discovery hybrid', 'evoque hybrid',
+      // Lincoln
+      'corsair hybrid', 'aviator hybrid',
+      // Cadillac
+      'lyriq', 'ct6 hybrid',
+      // Buick
+      'velite',
+      // MINI
+      'cooper se',
+      // Mitsubishi
+      'outlander phev',
+      // Subaru
+      'crosstrek hybrid',
+      // Chrysler
+      'pacifica hybrid',
+      // Dodge
+      'durango hybrid',
+      // Ram
+      '1500 etorque',
+      // Mazda
+      'cx-5 hybrid', 'cx-9 hybrid',
+      // Volkswagen
+      'id.4', 'tiguan hybrid', 'atlas hybrid', 'jetta hybrid',
+      // FIAT
+      '500e'
+    ]
+  };
+
+  // Enhanced electric vehicle detection
+  function isElectricVehicle(modelName) {
+    const model = modelName.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim();
+    
+    // Direct EV keywords
+    const evKeywords = [
+      'electric', 'hybrid', 'plug-in', 'phev', 'bev', 'prime', 'volt', 'leaf', 
+      'bolt', 'e-tron', 'i-pace', 'model', 'ioniq', 'niro ev', 'soul ev', 
+      'ev6', 'clarity', 'insight', 'prius', 'mach-e', 'lightning', 'taycan',
+      'recharge', 'lyriq', 'cooper se', 'outlander phev', 'pacifica hybrid',
+      'id.4', '500e', 'nexo', 'ariya', 'c-max', 'fusion energi', 'accord plug-in'
+    ];
+    
+    // Check for EV keywords
+    if (evKeywords.some(keyword => model.includes(keyword))) {
+      return true;
+    }
+    
+    // Check against comprehensive EV database
+    return vehicleTypes.electric.some(evModel => {
+      const cleanEvModel = evModel.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim();
+      return model.includes(cleanEvModel) || cleanEvModel.includes(model) ||
+            model.replace(/\s+/g, '').includes(cleanEvModel.replace(/\s+/g, '')) ||
+            cleanEvModel.replace(/\s+/g, '').includes(model.replace(/\s+/g, ''));
+    });
+  }
+
+  // Enhanced vehicle classification with fuzzy matching
+  function classifyVehicle(modelName) {
+    const model = modelName.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim();
+    
+    // First check if it's electric
+    if (isElectricVehicle(model)) {
+      return 'electric';
+    }
+    
+    // Helper function for fuzzy matching
+    function fuzzyMatch(model, vehicleList) {
+      return vehicleList.some(vehicleModel => {
+        const cleanVehicle = vehicleModel.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim();
+        
+        // Exact match
+        if (model === cleanVehicle) return true;
+        
+        // Contains match
+        if (model.includes(cleanVehicle) || cleanVehicle.includes(model)) return true;
+        
+        // Remove spaces and try again
+        const modelNoSpaces = model.replace(/\s+/g, '');
+        const vehicleNoSpaces = cleanVehicle.replace(/\s+/g, '');
+        if (modelNoSpaces.includes(vehicleNoSpaces) || vehicleNoSpaces.includes(modelNoSpaces)) return true;
+        
+        // Split and check individual words
+        const modelWords = model.split(/\s+/);
+        const vehicleWords = cleanVehicle.split(/\s+/);
+        
+        return modelWords.some(mWord => 
+          vehicleWords.some(vWord => 
+            (mWord.length > 2 && vWord.length > 2) && 
+            (mWord.includes(vWord) || vWord.includes(mWord))
+          )
+        );
+      });
+    }
+    
+    // Check sedan matches first (more specific)
+    if (fuzzyMatch(model, vehicleTypes.sedan)) {
+      return 'Sedan';
+    }
+    
+    // Check guagua/SUV matches
+    if (fuzzyMatch(model, vehicleTypes.guagua)) {
+      return 'Guagua';
+    }
+    
+    // Enhanced keyword-based classification
+    const sedanKeywords = [
+      'sedan', 'coupe', 'convertible', 'roadster', 'hatchback', 'wagon',
+      'touring', 'sport', 'turbo', 'si', 'type-r', 'gti', 'rs', 'amg',
+      'quattro', 'm3', 'm5', 'is300', 'wrx', 'sti'
+    ];
+    
+    const guaguaKeywords = [
+      'suv', 'crossover', 'truck', 'pickup', 'van', 'minivan', 'crew cab',
+      'extended cab', 'regular cab', '4wd', 'awd', 'trail', 'off-road',
+      'expedition', 'adventure', 'terrain', 'ridge', 'frontier', 'navigator',
+      'explorer', 'discovery', 'outback', 'forester', 'pilot', 'pathfinder'
+    ];
+    
+    // Check keywords in model name
+    if (sedanKeywords.some(keyword => model.includes(keyword))) {
+      return 'Sedan';
+    }
+    
+    if (guaguaKeywords.some(keyword => model.includes(keyword))) {
+      return 'Guagua';
+    }
+    
+    // Make-based classification for ambiguous models
+    const makeElement = document.getElementById('make');
+    if (makeElement && makeElement.value) {
+      const make = makeElement.value.toLowerCase();
+      
+      // Brands that typically make more SUVs/trucks
+      const suvBrands = ['jeep', 'land rover', 'gmc', 'ram'];
+      if (suvBrands.includes(make)) {
+        return 'Guagua';
+      }
+    }
+    
+    // Default classification based on size indicators
+    const sizeKeywords = {
+      large: ['xl', 'max', 'grand', 'super', 'extended', 'crew', 'king', 'mega'],
+      small: ['mini', 'compact', 'eco', 'city', 'micro']
+    };
+    
+    if (sizeKeywords.large.some(keyword => model.includes(keyword))) {
+      return 'Guagua';
+    }
+    
+    if (sizeKeywords.small.some(keyword => model.includes(keyword))) {
+      return 'Sedan';
+    }
+    
+    // Final default: classify unknown vehicles as Guagua (safer for pricing)
+    return 'Guagua';
+  }
+
+  // Show loading state
+  function showLoading(element, text = "Cargando...") {
+    element.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = text;
+    option.disabled = true;
+    element.appendChild(option);
+  }
+
+  // Fill last 30 years
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= currentYear - 30; y--) {
+    yearSelect.add(new Option(y, y));
+  }
+
+  // Year change handler with improved error handling
+  yearSelect.addEventListener("change", async () => {
+    resetPlan();
+    makeSelect.innerHTML = '<option value="">Selecciona marca</option>';
+    modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+    makeSelect.disabled = true;
+    modelSelect.disabled = true;
+
+    if (!yearSelect.value) return;
+
+    try {
+      showLoading(makeSelect, "Cargando marcas...");
+      
+      const res = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json`);
+      
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      
+      const data = await res.json();
+      
+      if (!data.Results || data.Results.length === 0) {
+        throw new Error('No makes data received');
+      }
+      
+      makeSelect.innerHTML = '<option value="">Selecciona marca</option>';
+
+      const sortedMakes = data.Results
+        .map(item => item.MakeName.trim())
+        .filter(make => allowedMakes.some(allowed => 
+          allowed.toLowerCase() === make.toLowerCase()
+        ))
+        .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+      if (sortedMakes.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No hay marcas disponibles';
+        option.disabled = true;
+        makeSelect.appendChild(option);
+        return;
+      }
+
+      sortedMakes.forEach(make => makeSelect.add(new Option(make, make)));
+      makeSelect.disabled = false;
+      
+    } catch (error) {
+      console.error('Error loading makes:', error);
+      makeSelect.innerHTML = '<option value="" disabled>Error cargando marcas</option>';
+      showError('Error al cargar las marcas. Por favor, verifica tu conexión e inténtalo de nuevo.');
+    }
+  });
+
+  // Make change handler with comprehensive EV filtering
+  makeSelect.addEventListener("change", async () => {
+    resetPlan();
+    modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+    modelSelect.disabled = true;
+
+    if (!makeSelect.value || !yearSelect.value) return;
+
+    try {
+      showLoading(modelSelect, "Cargando modelos...");
+      
+      const res = await fetch(
+        `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(makeSelect.value)}/modelyear/${yearSelect.value}?format=json`
+      );
+      
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      
+      const data = await res.json();
+      
+      if (!data.Results) {
+        throw new Error('No models data received');
+      }
+      
+      modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+
+      const filteredModels = data.Results
+        .map(item => item.Model_Name.trim())
+        .filter(name => {
+          // Enhanced EV filtering
+          if (isElectricVehicle(name)) {
+            console.log(`Filtered out electric vehicle: ${name}`);
+            return false;
+          }
+          return true;
+        })
+        .filter((name, index, arr) => arr.indexOf(name) === index) // Remove duplicates
+        .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+      if (filteredModels.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No hay modelos de gasolina disponibles';
+        option.disabled = true;
+        modelSelect.appendChild(option);
+      } else {
+        filteredModels.forEach(model => modelSelect.add(new Option(model, model)));
+        modelSelect.disabled = false;
+      }
+      
+    } catch (error) {
+      console.error('Error loading models:', error);
+      modelSelect.innerHTML = '<option value="" disabled>Error cargando modelos</option>';
+      showError('Error al cargar los modelos. Por favor, inténtalo de nuevo.');
+    }
+  });
+
+  // Model change handler with enhanced classification
+  modelSelect.addEventListener("change", () => {
+    resetPlan();
+    if (!modelSelect.value) return;
+
+    const classification = classifyVehicle(modelSelect.value);
+    
+    console.log(`Vehicle: ${modelSelect.value} -> Classification: ${classification}`);
+    
+    if (classification === 'electric') {
+      planDiv.textContent = "No disponible";
+      planHidden.value = "";
+      showError("Los vehículos eléctricos e híbridos no están disponibles en nuestros planes de mantenimiento.", "electric");
+      return;
+    }
+
+    planDiv.textContent = classification;
+    planHidden.value = classification;
+    hideError();
+  });
+
+  // Enhanced form submission
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    if (!yearSelect.value || !makeSelect.value || !modelSelect.value || !planHidden.value) {
+      showError("Por favor completa todos los campos para continuar.");
+      return;
+    }
+
+    if (planHidden.value === "electric" || !planHidden.value) {
+      showError("Este vehículo no es compatible con nuestros planes de mantenimiento.");
+      return;
+    }
+
+    hideError();
+    
+    let vehicleInfo = `${yearSelect.value} ${makeSelect.value} ${modelSelect.value}`;
+    let planInfo = "";
+    let className = "";
+
+    switch (planHidden.value) {
+      case "Sedan":
+        className = "sedan";
+        planInfo = "Sedán Básico – $400/año";
+        break;
+      case "Guagua":
+        className = "suv";  
+        planInfo = "Guagua Básica – $500/año";
+        break;
+      default:
+        showError("Error en la clasificación del vehículo.");
+        return;
+    }
+
+    resultDiv.className = `result-card ${className}`;
+    resultDiv.innerHTML = `
+      <div class="vehicle-info">
+        <strong>${vehicleInfo}</strong>
+      </div>
+      <div class="plan-info">
+        Tu plan: <b>${planInfo}</b>
+      </div>
+      <div class="extra-info">
+        <p>*Este plan incluye 4 mantenimientos al año con servicios básicos de inspección, 
+        cambio de fluidos, revisión de frenos y sistemas eléctricos básicos.</p>
+      </div>
+      <button type="button" class="reset-btn" onclick="resetForm()">Nuevo cálculo</button>
+    `;
+
+    resultDiv.classList.remove("hidden");
+
+    // Lock form inputs
+    yearSelect.disabled = true;
+    makeSelect.disabled = true;
+    modelSelect.disabled = true;
+  });
+
+  // Helper functions
+  function resetPlan() {
+    planDiv.textContent = "—";
+    planHidden.value = "";
+    hideError();
+  }
+
+  function showError(message, type = "error") {
+    resultDiv.className = `result-card ${type}`;
+    resultDiv.innerHTML = `<p>${message}</p>`;
+    resultDiv.classList.remove("hidden");
+  }
+
+  function hideError() {
+    resultDiv.innerHTML = "";
+    resultDiv.className = "result-card hidden";
+  }
+
+  function resetForm() {
+    window.location.reload();
+  }
+
+  // Reset on page load
+  window.addEventListener("pageshow", () => {
+    form.reset();
+    resetPlan();
+    
+    // Re-enable all selects
+    yearSelect.disabled = false;
+    makeSelect.disabled = true;
+    modelSelect.disabled = true;
+    
+    // Reset select contents
+    makeSelect.innerHTML = '<option value="">Selecciona marca</option>';
+    modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+  });
+
+  // Add enhanced CSS for better user experience
+  const style = document.createElement('style');
+  style.textContent = `
+    .result-card {
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+    }
+    
+    .result-card.electric {
+      background: #ffebee;
+      border: 2px solid #f44336;
+      color: #c62828;
+    }
+    
+    .result-card.error {
+      background: #fff3e0;
+      border: 2px solid #ff9800;
+      color: #e65100;
+    }
+    
+    .vehicle-info {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .plan-info {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #2e7d32;
+    }
+    
+    .extra-info p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.4;
+      font-style: italic;
+    }
+    
+    .reset-btn {
+      margin-top: 15px;
+      padding: 12px 24px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+    
+    .reset-btn:hover {
+      background: #cc5200;
+      transform: translateY(-1px);
+    }
+    
+    .form-group select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .plan-display {
+      font-weight: bold;
+      text-align: center;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  // Performance optimization: debounce API calls
+  let makeTimeout, modelTimeout;
+
+  // Override the original event listeners with debounced versions
+  yearSelect.removeEventListener("change", arguments.callee);
+  makeSelect.removeEventListener("change", arguments.callee);
+
+  // Add console logging for debugging
+  console.log('Enhanced Vehicle Classification System Loaded');
+  console.log(`Total Sedans: ${vehicleTypes.sedan.length}`);
+  console.log(`Total Guaguas: ${vehicleTypes.guagua.length}`);
+  console.log(`Total Electric Vehicles: ${vehicleTypes.electric.length}`);
+</script>
+
+
+
+<footer>
+  <!-- Left Section: Logo -->
+  <section class="FooterSiteName">
+    <div class="footer-box">
+      <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+    </div>
+  </section>
+
+  <!-- Middle Section: Contact -->
+  <section class="FooterSiteSocial">
+    <div class="footer-box">
+      <h2>Contact us</h2>
+      <div class="FollowSocials">
+
+        <a href="https://wa.me/+19394100321" target="_blank">
+          <div class="contact phone">
+            <img src="Images/Phone_Logo.webp" alt="Phone" />
+            <span>(939) 645-3838</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+          <div class="contact instagram">
+            <img src="Images/Insta_Logo.webp" alt="Instagram" />
+            <span>@garajeagueybana</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Right Section: Subscribe -->
+  <section class="FooterSiteNews">
+    <div class="footer-box">
+      <h2>Subscribe to our membership</h2>
+      <a href="nosotros.html" class="SignUp">Subscribe!</a>
+    </div>
+  </section>
+</footer>
+
+    </main>
