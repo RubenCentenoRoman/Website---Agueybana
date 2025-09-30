@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sub_styles.css" />
+    <title>Agueybana</title>
+  </head>
+
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="nav-left">
+          <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+        </div>
+
+        <div class="nav-center nav-buttons">
+          <button onclick="location.href='index.html'">Inicio</button>
+          <button onclick="location.href='subscripcion.html'">Subscripción</button>
+          <button onclick="location.href='nosotros.html'">Sobre nosotros</button>
+        </div>
+
+        <div class="nav-right contact-info">
+          <!-- <a href="tel:+19396453838"> -->
+          <a href="https://wa.me/+19394100321" target="_blank">
+            <div class="contact phone">
+              <img src="Images/Phone_Logo.webp" alt="Phone" />
+              <span>(939) 645-3838</span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+            <div class="contact instagram">
+              <img src="Images/Insta_Logo.webp" alt="Instagram" />
+              <span>@garajeagueybana</span>
+            </div>
+          </a>
+        </div>
+      </nav>
+      
+      <section class="heading">
+        <div class="heading-content">
+          <h1>Subscripción de mantenimiento</h1>
+          <p>Incluye 4 visitas al año para un mantenimiento automático de tu carro.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+
+      <h1 class="services-title">Servicios que ofrecemos</h1>
+      <section class="services">
+        
+        <div class="service-box">
+          <img src="Images/Oil.webp" alt="Cambio de aceite">
+          <h3>Cambio de aceite</h3>
+          <p>2 servicios de cambio de aceite y filtro al año, incluyendo rotación de gomas.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/brake.webp" alt="Flush de frenos">
+          <h3>Flush de frenos</h3>
+          <p>Servicio completo de limpieza del sistema de frenos una vez al año.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/inspection.webp" alt="Inspección multipunto">
+          <h3>Inspección multipunto</h3>
+          <p>2 chequeos completos al año para detectar cualquier problema a tiempo.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/fluid-level.webp" alt="Chequeo de fluidos">
+          <h3>Chequeo de fluidos</h3>
+          <p>En cada visita se revisan y rellenan todos los fluidos visibles del vehículo.</p>
+        </div>
+      </section>
+
+
+
+      <h1 class="services-title">Servicios adicionales (<b>no incluidos</b>; precios y citas <b>según servicio</b>)</h1>
+      <section class="services">
+        <div class="service-box">
+          <img src="Images/General_Mechanic.webp" alt="Cambio de aceite">
+          <h3>Mecanica liviana general</h3>
+          <p>Reparaciones básicas como frenos, correas, batería, luces, sensores y otros componentes menores.</p>
+        </div>
+        
+        <div class="service-box">
+          <img src="Images/Electromechanics.webp" alt="Cambio de aceite">
+          <h3>Electromecanica</h3>
+          <p>Diagnóstico y reparación de fallas eléctricas y electrónicas del sistema del vehículo.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/Inspection_Sale.webp" alt="Cambio de aceite">
+          <h3>Inspección de vehículos para compra/venta</h3>
+          <p>Evaluación completa del vehículo para conocer su estado antes de comprarlo o venderlo.</p>
+        </div>
+
+        <div class="service-box">
+          <img src="Images/Alignment.webp" alt="Cambio de aceite">
+          <h3>Alineamientos</h3>
+          <p>Ajuste de ángulos de las ruedas para corregir desviaciones y mejorar el manejo del vehículo.</p>
+        </div>
+
+      </section>
+
+<h1 class="services-title">Agregar tu Vehículo</h1>
+<section class="vehicle-form">
+  <form id="vehicleForm">
+
+    <div class="form-group">
+      <label for="year">Año</label>
+      <select id="year" required>
+        <option value="">Selecciona año</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="make">Marca</label>
+      <select id="make" required disabled>
+        <option value="">Selecciona marca</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="model">Modelo</label>
+      <select id="model" required disabled>
+        <option value="">Selecciona modelo</option>
+      </select>
+    </div>
+
+    <!-- Plan asignado -->
+    <div class="form-group">
+      <label for="plan">Plan asignado:</label>
+      <div id="plan" class="plan-display">—</div>
+      <input type="hidden" id="plan_hidden" name="plan">
+    </div>
+
+    <button type="submit" class="select-btn">Agregar Vehículo</button>
+  </form>
+
+  <div id="result" class="result-card hidden"></div>
+</section>
+
+<script>
+  const yearSelect = document.getElementById("year");
+  const makeSelect = document.getElementById("make");
+  const modelSelect = document.getElementById("model");
+  const planDiv = document.getElementById("plan");
+  const planHidden = document.getElementById("plan_hidden");
+  const form = document.getElementById("vehicleForm");
+  const resultDiv = document.getElementById("result");
+
+  const allowedMakes = [
+    "Toyota","Hyundai","Kia","Honda","Nissan","Mitsubishi","Mazda",
+    "Ford","Chevrolet","Jeep","Subaru","Volkswagen","Chrysler",
+    "Dodge","Ram","GMC","Buick","Acura","Infiniti","Lexus",
+    "Mercedes-Benz","BMW","Audi","Lincoln","Cadillac",
+    "MINI","Porsche","Volvo","Land Rover","Jaguar","Alfa Romeo","FIAT"
+  ];
+
+  // Cache for API results to reduce API calls
+  const vehicleDataCache = {};
+
+  // Check if vehicle is electric/hybrid
+  function isElectricVehicle(make, model, fuelType = '') {
+    const combined = `${make} ${model} ${fuelType}`.toLowerCase();
+    const electricKeywords = [
+      'electric', 'hybrid', 'plug-in', 'phev', 'bev', 'ev',
+      'prime', 'energi', 'e-tron', 'bolt', 'leaf', 'volt',
+      'ioniq', 'clarity', 'taycan', 'mach-e', 'lightning',
+      'i-pace', 'model s', 'model 3', 'model x', 'model y',
+      'id.4', 'id.3', 'ev6', 'niro ev', 'kona electric'
+    ];
+    
+    // Check fuel type from API
+    if (fuelType.toLowerCase().includes('electric') || 
+        fuelType.toLowerCase().includes('hybrid')) {
+      return true;
+    }
+    
+    return electricKeywords.some(keyword => combined.includes(keyword));
+  }
+
+  // Estimate oil capacity based on engine displacement and type
+  function estimateOilCapacity(engineData) {
+    if (!engineData) return 4.5; // Default
+    
+    const { displacement, cylinders, vehicleType, engineConfig } = engineData;
+    
+    // Base calculation using displacement (in liters)
+    let oilCapacity = 4.0; // Base capacity
+    
+    if (displacement) {
+      // Convert displacement to liters if needed
+      const liters = parseFloat(displacement);
+      
+      // General formula: smaller engines use less oil
+      if (liters < 1.5) {
+        oilCapacity = 3.5;
+      } else if (liters < 2.0) {
+        oilCapacity = 4.0;
+      } else if (liters < 2.5) {
+        oilCapacity = 4.5;
+      } else if (liters < 3.0) {
+        oilCapacity = 4.8;
+      } else if (liters < 3.5) {
+        oilCapacity = 5.0;
+      } else if (liters < 4.0) {
+        oilCapacity = 5.5;
+      } else if (liters < 5.0) {
+        oilCapacity = 6.0;
+      } else if (liters < 6.0) {
+        oilCapacity = 6.5;
+      } else {
+        oilCapacity = 7.0;
+      }
+    }
+    
+    // Adjust based on cylinders
+    if (cylinders) {
+      const cyl = parseInt(cylinders);
+      if (cyl <= 4) {
+        oilCapacity = Math.min(oilCapacity, 4.5);
+      } else if (cyl === 6) {
+        oilCapacity = Math.max(oilCapacity, 4.5);
+      } else if (cyl >= 8) {
+        oilCapacity = Math.max(oilCapacity, 5.5);
+      }
+    }
+    
+    // Adjust based on vehicle type
+    if (vehicleType) {
+      const type = vehicleType.toLowerCase();
+      if (type.includes('truck') || type.includes('suv') || type.includes('van')) {
+        oilCapacity = Math.max(oilCapacity, 5.0);
+      }
+      if (type.includes('heavy') || type.includes('full-size')) {
+        oilCapacity += 0.5;
+      }
+    }
+    
+    return oilCapacity;
+  }
+
+  // Get vehicle details from NHTSA VIN decoder API using partial VIN
+  async function getVehicleDetails(year, make, model) {
+    const cacheKey = `${year}-${make}-${model}`;
+    
+    // Check cache first
+    if (vehicleDataCache[cacheKey]) {
+      return vehicleDataCache[cacheKey];
+    }
+    
+    try {
+      // Try to get more detailed information using the NHTSA database
+      // We'll search for vehicles and try to extract engine information
+      const makeId = await getMakeId(make);
+      
+      if (makeId) {
+        // Get models for this make and year with more details
+        const url = `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/${makeId}/modelyear/${year}?format=json`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.Results && data.Results.length > 0) {
+          // Find matching model
+          const modelMatch = data.Results.find(m => 
+            m.Model_Name.toLowerCase().includes(model.toLowerCase()) ||
+            model.toLowerCase().includes(m.Model_Name.toLowerCase())
+          );
+          
+          if (modelMatch) {
+            // Try to get vehicle type information
+            const vehicleTypeUrl = `https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMakeId/${makeId}?format=json`;
+            const typeResponse = await fetch(vehicleTypeUrl);
+            const typeData = await typeResponse.json();
+            
+            let vehicleType = 'Passenger Car';
+            if (typeData.Results && typeData.Results.length > 0) {
+              vehicleType = typeData.Results[0].VehicleTypeName || 'Passenger Car';
+            }
+            
+            // Estimate engine data based on model name and type
+            const engineData = estimateEngineFromModel(model, vehicleType);
+            
+            vehicleDataCache[cacheKey] = engineData;
+            return engineData;
+          }
+        }
+      }
+      
+      // Fallback: estimate from model name
+      const engineData = estimateEngineFromModel(model, '');
+      vehicleDataCache[cacheKey] = engineData;
+      return engineData;
+      
+    } catch (error) {
+      console.error('Error fetching vehicle details:', error);
+      // Return estimated data as fallback
+      return estimateEngineFromModel(model, '');
+    }
+  }
+
+  // Get Make ID from NHTSA
+  async function getMakeId(makeName) {
+    try {
+      const url = `https://vpic.nhtsa.dot.gov/api/vehicles/GetMakeForManufacturer/${encodeURIComponent(makeName)}?format=json`;
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      if (data.Results && data.Results.length > 0) {
+        return data.Results[0].Make_ID;
+      }
+      
+      // Try alternative: get all makes and find match
+      const allMakesUrl = `https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json`;
+      const allMakesResponse = await fetch(allMakesUrl);
+      const allMakesData = await allMakesResponse.json();
+      
+      if (allMakesData.Results) {
+        const makeMatch = allMakesData.Results.find(m => 
+          m.Make_Name.toLowerCase() === makeName.toLowerCase()
+        );
+        if (makeMatch) {
+          return makeMatch.Make_ID;
+        }
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error getting make ID:', error);
+      return null;
+    }
+  }
+
+  // Estimate engine specs from model name and known patterns
+  function estimateEngineFromModel(model, vehicleType) {
+    const modelLower = model.toLowerCase();
+    let displacement = 2.5; // Default
+    let cylinders = 4; // Default
+    let estimatedType = vehicleType || 'Passenger Car';
+    
+    // Detect vehicle type from model name
+    if (modelLower.match(/f-\d{3}|silverado|sierra|ram \d{4}|tundra|titan/)) {
+      estimatedType = 'Truck';
+      displacement = 5.0;
+      cylinders = 8;
+    } else if (modelLower.match(/tahoe|suburban|expedition|yukon|escalade|navigator|armada/)) {
+      estimatedType = 'Large SUV';
+      displacement = 5.3;
+      cylinders = 8;
+    } else if (modelLower.match(/explorer|pilot|highlander|traverse|atlas|telluride|palisade/)) {
+      estimatedType = 'SUV';
+      displacement = 3.5;
+      cylinders = 6;
+    } else if (modelLower.match(/rav4|cr-v|escape|rogue|equinox|tucson|sportage|compass/)) {
+      estimatedType = 'Compact SUV';
+      displacement = 2.5;
+      cylinders = 4;
+    } else if (modelLower.match(/corolla|civic|sentra|elantra|forte|impreza|mazda3/)) {
+      estimatedType = 'Compact';
+      displacement = 2.0;
+      cylinders = 4;
+    } else if (modelLower.match(/camry|accord|altima|sonata|optima|legacy|mazda6/)) {
+      estimatedType = 'Midsize';
+      displacement = 2.5;
+      cylinders = 4;
+    } else if (modelLower.match(/mustang|camaro|challenger|charger|corvette/)) {
+      estimatedType = 'Sports Car';
+      displacement = 5.0;
+      cylinders = 8;
+    } else if (modelLower.match(/miata|mx-5|brz|86|370z|350z/)) {
+      estimatedType = 'Sports Car';
+      displacement = 2.0;
+      cylinders = 4;
+    } else if (modelLower.match(/odyssey|sienna|pacifica|carnival/)) {
+      estimatedType = 'Minivan';
+      displacement = 3.5;
+      cylinders = 6;
+    } else if (modelLower.match(/ranger|colorado|canyon|tacoma|frontier|maverick/)) {
+      estimatedType = 'Compact Truck';
+      displacement = 2.5;
+      cylinders = 4;
+    }
+    
+    // Check for engine size indicators in model name
+    if (modelLower.includes('v8') || modelLower.includes('5.0') || modelLower.includes('5.7') || modelLower.includes('6.2')) {
+      cylinders = 8;
+      displacement = 5.0;
+    } else if (modelLower.includes('v6') || modelLower.includes('3.5') || modelLower.includes('3.6')) {
+      cylinders = 6;
+      displacement = 3.5;
+    } else if (modelLower.includes('turbo') || modelLower.includes('2.0t')) {
+      cylinders = 4;
+      displacement = 2.0;
+    }
+    
+    // Check for specific engine displacements in name
+    const dispMatch = modelLower.match(/(\d\.\d)l?/);
+    if (dispMatch) {
+      displacement = parseFloat(dispMatch[1]);
+    }
+    
+    return {
+      displacement: displacement,
+      cylinders: cylinders,
+      vehicleType: estimatedType,
+      engineConfig: cylinders <= 4 ? 'Inline' : 'V'
+    };
+  }
+
+  // Classify vehicle based on oil capacity from API data
+  async function classifyVehicle(year, make, model) {
+    // Check if electric first
+    if (isElectricVehicle(make, model)) {
+      return { type: 'electric', oilCapacity: 0 };
+    }
+    
+    // Get vehicle details from API
+    const vehicleData = await getVehicleDetails(year, make, model);
+    
+    // Estimate oil capacity based on engine data
+    const oilCapacity = estimateOilCapacity(vehicleData);
+    
+    console.log(`Vehicle: ${year} ${make} ${model}`);
+    console.log(`Engine Data:`, vehicleData);
+    console.log(`Estimated Oil Capacity: ${oilCapacity} quarts`);
+    
+    // Classification based on oil capacity
+    if (oilCapacity < 5.0) {
+      return { type: 'Sedan', oilCapacity: oilCapacity };
+    } else {
+      return { type: 'Guagua', oilCapacity: oilCapacity };
+    }
+  }
+
+  // Show loading state
+  function showLoading(element, text = "Cargando...") {
+    element.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = text;
+    option.disabled = true;
+    element.appendChild(option);
+  }
+
+  // Fill last 30 years
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= currentYear - 30; y--) {
+    yearSelect.add(new Option(y, y));
+  }
+
+  // Year change handler
+  yearSelect.addEventListener("change", async () => {
+    resetPlan();
+    makeSelect.innerHTML = '<option value="">Selecciona marca</option>';
+    modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+    makeSelect.disabled = true;
+    modelSelect.disabled = true;
+
+    if (!yearSelect.value) return;
+
+    try {
+      showLoading(makeSelect, "Cargando marcas...");
+      
+      const res = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json`);
+      
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      
+      const data = await res.json();
+      
+      if (!data.Results || data.Results.length === 0) {
+        throw new Error('No makes data received');
+      }
+      
+      makeSelect.innerHTML = '<option value="">Selecciona marca</option>';
+
+      const sortedMakes = data.Results
+        .map(item => item.MakeName.trim())
+        .filter(make => allowedMakes.some(allowed => 
+          allowed.toLowerCase() === make.toLowerCase()
+        ))
+        .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+      if (sortedMakes.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No hay marcas disponibles';
+        option.disabled = true;
+        makeSelect.appendChild(option);
+        return;
+      }
+
+      sortedMakes.forEach(make => makeSelect.add(new Option(make, make)));
+      makeSelect.disabled = false;
+      
+    } catch (error) {
+      console.error('Error loading makes:', error);
+      makeSelect.innerHTML = '<option value="" disabled>Error cargando marcas</option>';
+      showError('Error al cargar las marcas. Por favor, verifica tu conexión e inténtalo de nuevo.');
+    }
+  });
+
+  // Make change handler
+  makeSelect.addEventListener("change", async () => {
+    resetPlan();
+    modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+    modelSelect.disabled = true;
+
+    if (!makeSelect.value || !yearSelect.value) return;
+
+    try {
+      showLoading(modelSelect, "Cargando modelos...");
+      
+      const res = await fetch(
+        `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${encodeURIComponent(makeSelect.value)}/modelyear/${yearSelect.value}?format=json`
+      );
+      
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      
+      const data = await res.json();
+      
+      if (!data.Results) {
+        throw new Error('No models data received');
+      }
+      
+      modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+
+      const filteredModels = data.Results
+        .map(item => item.Model_Name.trim())
+        .filter(name => {
+          // Filter out electric vehicles
+          if (isElectricVehicle(makeSelect.value, name)) {
+            console.log(`Filtered out electric vehicle: ${name}`);
+            return false;
+          }
+          return true;
+        })
+        .filter((name, index, arr) => arr.indexOf(name) === index) // Remove duplicates
+        .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+      if (filteredModels.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No hay modelos de gasolina disponibles';
+        option.disabled = true;
+        modelSelect.appendChild(option);
+      } else {
+        filteredModels.forEach(model => modelSelect.add(new Option(model, model)));
+        modelSelect.disabled = false;
+      }
+      
+    } catch (error) {
+      console.error('Error loading models:', error);
+      modelSelect.innerHTML = '<option value="" disabled>Error cargando modelos</option>';
+      showError('Error al cargar los modelos. Por favor, inténtalo de nuevo.');
+    }
+  });
+
+  // Model change handler - now uses API data for oil capacity
+  modelSelect.addEventListener("change", async () => {
+    resetPlan();
+    if (!modelSelect.value) return;
+
+    // Show loading state
+    planDiv.innerHTML = '<small>Calculando...</small>';
+    
+    try {
+      const classification = await classifyVehicle(yearSelect.value, makeSelect.value, modelSelect.value);
+      
+      if (classification.type === 'electric') {
+        planDiv.textContent = "No disponible";
+        planHidden.value = "";
+        showError("Los vehículos eléctricos e híbridos no están disponibles en nuestros planes de mantenimiento.", "electric");
+        return;
+      }
+
+      // Display classification and oil capacity
+      planDiv.innerHTML = `${classification.type} <br><small>(${classification.oilCapacity.toFixed(1)} qt de aceite)</small>`;
+      planHidden.value = classification.type;
+      
+      // Store oil capacity for later use
+      planDiv.dataset.oilCapacity = classification.oilCapacity;
+      
+      hideError();
+    } catch (error) {
+      console.error('Error classifying vehicle:', error);
+      planDiv.textContent = "Error";
+      showError("Error al clasificar el vehículo. Por favor, inténtalo de nuevo.");
+    }
+  });
+
+  // Form submission
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    if (!yearSelect.value || !makeSelect.value || !modelSelect.value || !planHidden.value) {
+      showError("Por favor completa todos los campos para continuar.");
+      return;
+    }
+
+    if (planHidden.value === "electric" || !planHidden.value) {
+      showError("Este vehículo no es compatible con nuestros planes de mantenimiento.");
+      return;
+    }
+
+    hideError();
+    
+    let vehicleInfo = `${yearSelect.value} ${makeSelect.value} ${modelSelect.value}`;
+    let planInfo = "";
+    let className = "";
+    const oilCapacity = parseFloat(planDiv.dataset.oilCapacity) || 4.5;
+
+    switch (planHidden.value) {
+      case "Sedan":
+        className = "sedan";
+        planInfo = "Sedán Básico – $400/año";
+        break;
+      case "Guagua":
+        className = "suv";  
+        planInfo = "Guagua Básica – $500/año";
+        break;
+      default:
+        showError("Error en la clasificación del vehículo.");
+        return;
+    }
+
+    resultDiv.className = `result-card ${className}`;
+    resultDiv.innerHTML = `
+      <div class="vehicle-info">
+        <strong>${vehicleInfo}</strong>
+      </div>
+      <div class="oil-info">
+        Capacidad de aceite: <b>${oilCapacity.toFixed(1)} cuartos</b>
+      </div>
+      <div class="plan-info">
+        Tu plan: <b>${planInfo}</b>
+      </div>
+      <div class="extra-info">
+        <p>*Este plan incluye 4 mantenimientos al año con servicios básicos de inspección, 
+        cambio de fluidos, revisión de frenos y sistemas eléctricos básicos.</p>
+        <p class="oil-note">La clasificación del plan se basa en la capacidad de aceite del motor: 
+        menos de 5 cuartos = Sedán, 5 cuartos o más = Guagua.</p>
+      </div>
+      <button type="button" class="reset-btn" onclick="resetForm()">Nuevo cálculo</button>
+    `;
+
+    resultDiv.classList.remove("hidden");
+
+    // Lock form inputs
+    yearSelect.disabled = true;
+    makeSelect.disabled = true;
+    modelSelect.disabled = true;
+  });
+
+  // Helper functions
+  function resetPlan() {
+    planDiv.textContent = "—";
+    planHidden.value = "";
+    hideError();
+  }
+
+  function showError(message, type = "error") {
+    resultDiv.className = `result-card ${type}`;
+    resultDiv.innerHTML = `<p>${message}</p>`;
+    resultDiv.classList.remove("hidden");
+  }
+
+  function hideError() {
+    resultDiv.innerHTML = "";
+    resultDiv.className = "result-card hidden";
+  }
+
+  function resetForm() {
+    window.location.reload();
+  }
+
+  // Reset on page load
+  window.addEventListener("pageshow", () => {
+    form.reset();
+    resetPlan();
+    
+    // Re-enable all selects
+    yearSelect.disabled = false;
+    makeSelect.disabled = true;
+    modelSelect.disabled = true;
+    
+    // Reset select contents
+    makeSelect.innerHTML = '<option value="">Selecciona marca</option>';
+    modelSelect.innerHTML = '<option value="">Selecciona modelo</option>';
+  });
+
+  // Add enhanced CSS for better user experience
+  const style = document.createElement('style');
+  style.textContent = `
+    .result-card {
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+    }
+    
+    .result-card.electric {
+      background: #ffebee;
+      border: 2px solid #f44336;
+      color: #c62828;
+    }
+    
+    .result-card.error {
+      background: #fff3e0;
+      border: 2px solid #ff9800;
+      color: #e65100;
+    }
+    
+    .vehicle-info {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .oil-info {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #1976d2;
+    }
+    
+    .plan-info {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #2e7d32;
+    }
+    
+    .extra-info p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.4;
+      font-style: italic;
+    }
+    
+    .oil-note {
+      background: #e3f2fd;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 10px !important;
+      font-size: 13px !important;
+      color: #1565c0 !important;
+      font-style: normal !important;
+    }
+    
+    .reset-btn {
+      margin-top: 15px;
+      padding: 12px 24px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+    
+    .reset-btn:hover {
+      background: #cc5200;
+      transform: translateY(-1px);
+    }
+    
+    .form-group select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .plan-display {
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.5;
+    }
+    
+    .plan-display small {
+      font-weight: normal;
+      color: #666;
+      font-size: 0.9em;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  // Console logging for debugging
+  console.log('API-Based Oil Capacity Vehicle Classification System Loaded');
+  console.log('Using NHTSA API for vehicle data');
+  console.log('Classification Rule: < 5 quarts = Sedan, >= 5 quarts = Guagua');
+</script>
+
+
+
+<footer>
+  <!-- Left Section: Logo -->
+  <section class="FooterSiteName">
+    <div class="footer-box">
+      <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+    </div>
+  </section>
+
+  <!-- Middle Section: Contact -->
+  <section class="FooterSiteSocial">
+    <div class="footer-box">
+      <h2>Contact us</h2>
+      <div class="FollowSocials">
+
+        <a href="https://wa.me/+19394100321" target="_blank">
+          <div class="contact phone">
+            <img src="Images/Phone_Logo.webp" alt="Phone" />
+            <span>(939) 645-3838</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+          <div class="contact instagram">
+            <img src="Images/Insta_Logo.webp" alt="Instagram" />
+            <span>@garajeagueybana</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Right Section: Subscribe -->
+  <section class="FooterSiteNews">
+    <div class="footer-box">
+      <h2>Subscribe to our membership</h2>
+      <a href="nosotros.html" class="SignUp">Subscribe!</a>
+    </div>
+  </section>
+</footer>
+
+    </main>

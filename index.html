@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main_styles.css" />
+    <title>Agueybana</title>
+  </head>
+
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="nav-left">
+          <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+        </div>
+
+        <div class="nav-center nav-buttons">
+          <button onclick="location.href='index.html'">Inicio</button>
+          <button onclick="location.href='subscripcion.html'">Subscripción</button>
+          <button onclick="location.href='nosotros.html'">Sobre nosotros</button>
+        </div>
+
+        <div class="nav-right contact-info">
+          <a href="https://wa.me/+19394100321" target="_blank">
+            <div class="contact phone">
+              <img src="Images/Phone_Logo.webp" alt="Phone" />
+              <span>(939) 645-3838</span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+            <div class="contact instagram">
+              <img src="Images/Insta_Logo.webp" alt="Instagram" />
+              <span>@garajeagueybana</span>
+            </div>
+          </a>
+        </div>
+      </nav>
+      
+      <section class="heading">
+        <div class="heading-content">
+          <h1>Bienvenido a Agueybana</h1>
+          <p>Tu mecánico de confianza, cuando y donde lo necesites.</p>
+          <!-- Placeholder login button -->
+          <button class="login-btn" onclick="alert('Placeholder de login')">
+            Iniciar sesión
+          </button>
+        </div>
+      </section>
+    </header>
+
+
+    <main>
+      <!-- Services summary (intro stays first) -->
+      <section class="summary-services">
+        <div class="interact-summary">
+          <div class="img-box">
+            <img id="mainImgLeft" src="Images/1.jpg" alt="">
+          </div>
+          <div class="nav">
+            <span onclick="prev()">&#9664;</span>
+            Servicios:
+            <span onclick="next()">&#9654;</span>
+          </div>
+        </div>
+
+        <div class="summary-text">
+          <div class="image-placeholder">
+            <img id="mainImgRight" src="Images/1.jpg" alt="">
+          </div>
+
+          <hr>
+          <h2 id="title">Title goes here</h2>
+          <p id="text">Text goes here</p>
+          <hr>
+          <div class="small-title" id="smallTitle">Title goes here</div>
+        </div>
+      </section>
+
+      <script>
+        const slides = [
+          {t:"Mecánica liviana", 
+          c:"Mantenimiento y reparaciones esenciales para prolongar la vida útil de tu vehículo. Realizamos cambio de aceite, filtros, bujías, pastillas de freno, correas y mangueras, así como pequeños ajustes mecánicos.", 
+          i:"Images/Liviana_Sum.webp"},
+
+          {t:"Electromecánica", 
+          c:"Servicio especializado en diagnóstico y reparación de los sistemas eléctricos y electrónicos de tu vehículo. Incluye batería, alternador, motor de arranque, sistema de luces y cableado.", 
+          i:"Images/Electro_Sum.webp"},
+
+          {t:"Inspección de vehículo", 
+          c:"Revisión detallada del estado general de tu auto: frenos, suspensión, dirección, motor, transmisión, luces y fluidos.", 
+          i:"Images/Inspection_Sum.webp"},
+
+          {t:"Alineamiento", 
+          c:"Ajuste preciso de los ángulos de las ruedas para mejorar la estabilidad, reducir desgaste de neumáticos y optimizar la dirección.", 
+          i:"Images/Alignment_Sum.webp"}
+        ];
+
+        let idx = 0;
+        function show() {
+          const textContent = document.querySelector(".summary-text");
+          textContent.classList.remove("animate-text");
+          void textContent.offsetWidth; 
+          title.textContent = slides[idx].t;
+          text.textContent = slides[idx].c;
+          smallTitle.textContent = slides[idx].t;
+          mainImgLeft.src = slides[idx].i;
+          mainImgRight.src = slides[idx].i;
+          textContent.classList.add("animate-text");
+        }
+        function prev() { idx = (idx - 1 + slides.length) % slides.length; show(); }
+        function next() { idx = (idx + 1) % slides.length; show(); }
+        show();
+      </script>
+
+
+      <!-- Subscription tiers -->
+      <section class="subscription">
+        <div class="car" onclick="location.href='subscripcion.html'">
+          <img src="Images/Car_Icon_2.webp" alt="Car icon">
+          <h1>Sedán Básico</h1>
+          <small>Para sedanes, hatchbacks, coupés</small>
+          <h2><span class="price">$400</span><span class="renewal">/año</span></h2>
+          <ul>
+            <li>✅ 2 cambios de aceite y filtro al año</li>
+            <li>✅ 2 Rotación de gomas</li>
+            <li>✅ 1 flush del sistema de frenos</li>
+            <li>✅ 2 inspecciones multipunto</li>
+            <li>✅ Chequeo de fluidos esenciales en cada visita</li>
+            <li>✅ Servicio de aire acondicionado</li>
+            <li>✅ Servicio a domicilio en toda la isla</li>
+          </ul>
+        </div>
+
+        <div class="truck" onclick="location.href='subscripcion.html'">
+          <img src="Images/SUV_Icon.webp" alt="SUV icon">
+          <h1>Guagua Básica</h1>
+          <small>Para SUV, pick-up trucks, minivans</small>
+          <h2><span class="price">$500</span><span class="renewal">/año</span></h2>
+          <ul>
+            <li>✅ 2 cambios de aceite y filtro al año</li>
+            <li>✅ 2 Rotación de gomas</li>
+            <li>✅ 1 flush del sistema de frenos</li>
+            <li>✅ 2 inspecciones multipunto</li>
+            <li>✅ Chequeo de fluidos esenciales en cada visita</li>
+            <li>✅ Servicio de aire acondicionado</li>
+            <li>✅ Servicio a domicilio en toda la isla</li>
+          </ul>
+        </div>
+
+        <div class="premium" onclick="location.href='subscripcion.html'">
+          <img src="Images/Premium_Icon_2.webp" alt="Premium icon">
+          <h1>Premium</h1>
+          <small>Para múltiples vehículos</small>
+          <h2><span class="price">$550</span><span class="renewal">/año</span></h2>
+          <ul>
+            <li>✅ Todos los beneficios del Car y Guagua Tier</li>
+            <li>✅ Descuento de 25% en la labor en otras reparaciones</li>
+            <li>✅ Opción de registrar más de un vehículo</li>
+            <li>✅ Flexibilidad para mantener vehículos distintos bajo una misma cuenta</li>
+            <li>✅ Servicio de aire acondicionado</li>
+            <li>✅ Servicio a domicilio en toda la isla</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Subscription banner moved below tiers -->
+      <a href="subscripcion.html" class="advertisement-anchor">
+        <div class="advertisement">
+          <p>Tu mecánico, cuando y donde lo necesitas.</p>
+          <button>¡Suscríbete ahora!</button>
+        </div>
+      </a>
+    </main>
+
+    <footer>
+      <section class="FooterSiteName">
+        <div class="footer-box">
+          <img src="Images/Logo_2.webp" alt="Agueybana Logo" class="logo" />
+        </div>
+      </section>
+
+      <section class="FooterSiteSocial">
+        <div class="footer-box">
+          <h2>Contact us</h2>
+          <div class="FollowSocials">
+            <a href="https://wa.me/+19394100321" target="_blank">
+              <div class="contact phone">
+                <img src="Images/Phone_Logo.webp" alt="Phone" />
+                <span>(939) 645-3838</span>
+              </div>
+            </a>
+            <a href="https://www.instagram.com/garajeagueybana/" target="_blank">
+              <div class="contact instagram">
+                <img src="Images/Insta_Logo.webp" alt="Instagram" />
+                <span>@garajeagueybana</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="FooterSiteNews">
+        <div class="footer-box">
+          <h2>Subscribe to our membership</h2>
+          <a href="subscripcion.html" class="SignUp">Subscribe!</a>
+        </div>
+      </section>
+    </footer>
+  </body>
+</html>
